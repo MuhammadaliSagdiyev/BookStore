@@ -2,9 +2,9 @@ package uz.yt.springdata.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import uz.yt.springdata.dao.Author;
+import uz.yt.springdata.dao.Publisher;
 
 @Repository
-public interface AuthorRepository extends JpaRepository<Author, Integer> {
+public interface PublisherRepository extends JpaRepository<Publisher, Integer> {
 
 }

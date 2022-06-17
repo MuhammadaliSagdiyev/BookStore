@@ -1,48 +1,79 @@
-package nt.java.DAO;
+package uz.yt.springdata.dao;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Date;
 
 @Entity
-@Table(name = "book")
+@Table(name = "Book")
+@NamedQuery(name = "Book.findByAuthorName",
+    query = "select b from Book b where b.authorId.firstName like ?1" //JPQL - Java Persistence Query Language
+)
+@NamedStoredProcedureQuery(name="Book.countBooks",
+        procedureName = "orderr",
+        parameters = {
+                @StoredProcedureParameter(name = "num1", mode = ParameterMode.IN, type = Integer.class),
+                @StoredProcedureParameter(name = "num2", mode = ParameterMode.IN, type = Integer.class)
+})
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Book {
+
     @Id
+    @GeneratedValue(generator = "book_id_seq")
+    @SequenceGenerator(name = "book_id_seq", sequenceName = "book_id_seq", allocationSize = 1)
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name_uz")
-    private String name_uz;
+    @Column(name = "nameuz")
+    private String nameUz;
 
-    @Column(name = "name_ru")
-    private String name_ru;
+    @Column(name = "nameru")
+    private String nameRu;
 
     @Column(name = "cost")
-    private Integer cost;
+    private BigDecimal cost;
 
-    @Column(name = "publisher_date")
-    private Date publisher_date;
+    @Column(name = "published_date")
+    private Date publishedDate;
 
     @Column(name = "page_count")
-    private Integer page_count;
+    private Integer pageCount;
 
-    @Column(name = "author_id")
-    private Integer author_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id", referencedColumnName = "id")
+    private Author authorId;
 
     @Column(name = "genre")
     private String genre;
 
-    @Column(name = "publisher_id")
-    private Integer publisher_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "publisher_id", referencedColumnName = "id")
+    private Publisher publisher;
 
+    @Column(name = "created_by")
+    private Integer createdBy;
 
+    @Column(name = "created_at")
+    private Date createdAt;
+
+    @Column(name = "updated_by")
+    private Integer updatedBy;
+
+    @Column(name = "updated_at")
+    private Date updatedAt;
+
+    public Book(Integer id, String nameUz, BigDecimal cost, Date publishedDate, Integer pageCount, String genre) {
+        this.id = id;
+        this.nameUz = nameUz;
+        this.cost = cost;
+        this.publishedDate = publishedDate;
+        this.pageCount = pageCount;
+        this.genre = genre;
+    }
 }

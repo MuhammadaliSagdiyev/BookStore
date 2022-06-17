@@ -1,22 +1,35 @@
-package nt.java.DTO;
+package uz.yt.springdata.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.math.BigDecimal;
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookDTO {
     private Integer id;
-    private String name_uz;
-    private String name_ru;
-    private Integer cost;
-    private Date publisher_date;
-    private Integer page_count;
-    private Integer author_id;
+    private String name;
+    private BigDecimal cost;
     private String genre;
-    private Integer publisher_id;
+    private String publishedDate;
+    private Integer pageCount;
+    private AuthorDTO author;
+    private PublisherDTO publisherDTO;
+
+    public BookDTO(Integer id, String name, BigDecimal cost, String genre, String publishedDate, Integer pageCount) {
+        this.id = id;
+        this.name = name;
+        this.cost = cost;
+        this.genre = genre;
+        this.publishedDate = publishedDate;
+        this.pageCount = pageCount;
+    }
+
+    public String toString(){
+        return String.format("%d-kitob: \nNomi: %s \nNarxi: %.2f \nJanri: %s \nMuallif: %s", id, name, cost, genre, author);
+    }
 }

@@ -2,9 +2,11 @@ package uz.yt.springdata.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import uz.yt.springdata.dao.Author;
+import uz.yt.springdata.dao.Authorities;
+
+import java.util.List;
 
 @Repository
-public interface AuthorRepository extends JpaRepository<Author, Integer> {
+public interface AuthoritiesRepository extends JpaRepository<Authorities, Integer> {
 
 }
